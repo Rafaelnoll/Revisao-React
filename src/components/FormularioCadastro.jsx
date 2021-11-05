@@ -1,23 +1,39 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import FormUsuario from "./FormUsuario";
 import FormDadosPessoais from "./FormDadosPessoais";
+import FormDadosDeEntrega from "./FormDadosDeEntrega";
+import { Typography } from "@material-ui/core";
 
-function FormularioCadastro(){
+function FormularioCadastro({aoEnviar}) {
 
-    const [etapaAtual,setEtapaAtual] = useState(0);
+    useEffect(()=>{
+        if(etapaAtual === formularios.length - 1){
+            aoEnviar(dadosColetados);
+        }   
+    })
+
+    const [etapaAtual, setEtapaAtual] = useState(0);
+    const [dadosColetados, setDadosColetados] = useState({});
 
     const formularios = [
-        <FormUsuario aoEnviar={proximaEtapa}/>,
-        <FormDadosPessoais aoEnviar={proximaEtapa}/>
+        <FormUsuario aoEnviar={coletarDados} />,
+        <FormDadosPessoais aoEnviar={coletarDados} />,
+        <FormDadosDeEntrega aoEnviar={coletarDados} />,
+        <Typography variant="h6" align="center">Obrigado por se cadastrar!</Typography>
     ]
 
-    function proximaEtapa(){
+    function proximaEtapa() {
         setEtapaAtual(etapaAtual + 1);
     }
 
-    return(
-        <section className="formulario">      
-              {formularios[etapaAtual]}  
+    function coletarDados(dados) {
+        setDadosColetados({ ...dadosColetados, ...dados })
+        proximaEtapa(dados);
+    }
+
+    return (
+        <section className="formulario">
+            {formularios[etapaAtual]}
         </section>
     );
 }

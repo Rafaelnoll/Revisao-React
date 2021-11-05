@@ -8,7 +8,7 @@ function FormUsuario({aoEnviar}) {
     return (
         <form onSubmit={(event)=>{
             event.preventDefault();
-            aoEnviar();
+            aoEnviar({email,senha});
         }}>
             <TextField
                 value={email}

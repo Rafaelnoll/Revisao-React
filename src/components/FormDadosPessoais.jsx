@@ -9,7 +9,7 @@ function FormDadosPessoais({aoEnviar}) {
     return (
         <form onSubmit={(event)=>{
             event.preventDefault();
-            aoEnviar();
+            aoEnviar({nome,sobrenome,cpf});
         }}>
             <TextField
                 value={nome}
